@@ -112,7 +112,7 @@ class FileManager:
 
     def run(self):
         while True:
-            print("\nWelcome to File Management System")
+            print("\n********** Welcome to File Management System **********")
             print("1: Create file")
             print("2: View all files")
             print("3: Delete file")
