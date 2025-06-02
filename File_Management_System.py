@@ -28,16 +28,16 @@ class FileManager:
         try:
 
             with open(filename, 'x') as f:
-                logger.info(f"File '{filename}' created successfully.")
-                print(f"File '{filename}'  created successfully!")
+                logger.info(f"File {filename} created successfully.")
+                print(f"File {filename} created successfully!")
 
-        except FileExistsError:
-            logger.warning(f"File '{filename}' already exists.")
-            print(f"File '{filename}' already exists!")
+        except FileExistsError as fe:
+            logger.warning(f"File {filename} already exists.")
+            print(str(fe))
 
         except Exception as e:
             logger.error(f"Unexpected error while creating file : {e}")
-            print(f"Unexpected error : {e}")
+            print(str(e))
 
 
     def view_all_files(self):
@@ -46,73 +46,73 @@ class FileManager:
             files = os.listdir()
             if not files:
                 logger.info("No files found in the directory.")
-                print("No file found!")
+                print("No files found in the directory.")
 
             else:
-                print("Files in directory!")
+                print("Files in the directory:")
                 for file in files:
                     print(file)
                 logger.info("Listed all files.")
 
         except Exception as e:
             logger.error(f"Unexpected error while viewing files : {e}")
-            print(f"Unexpected error : {e}")
+            print(str(e))
 
 
-    def delete_file(self,filename):
+    def delete_file(self, filename):
         try:
 
             os.remove(filename)
-            logger.info(f"File '{filename}' deleted.")
-            print(f"'{filename}' has been deleted successfully!")
+            logger.info(f"File {filename} deleted.")
+            print(f"{filename} has been deleted successfully!")
         
-        except FileNotFoundError:
-            logger.info(f"Attempted to delete non existent file '{filename}'.")
-            print("File not found!")
+        except FileNotFoundError as fe:
+            logger.info(f"Attempted to delete non existent file {filename}.")
+            print(str(fe))
 
         except Exception as e:
             logger.error(f"Unexpected error while deleting file : {e}")
-            print(f"Unexpected error : {e}")
+            print(str(e))
 
 
-    def read_file(self,filename):
+    def read_file(self, filename):
         try:
 
             with open(filename,'r') as f:
                 content = f.read()
-                logger.info(f"Read file '{filename}'.")
-                print(f"Content of '{filename}' : \n{content }")
+                logger.info(f"Read file {filename}")
+                print(f"Content of {filename} : \n{content }")
 
-        except FileNotFoundError:
-            logger.error(f"File '{filename}' not found for reading.")
-            print(f"'{filename}' doesn't exist!")
+        except FileNotFoundError as fe:
+            logger.error(f"File {filename} not found for reading.")
+            print(str(fe))
         
         except Exception as e:
             logger.error(f"Unexpected error occurred while reading file : {e}")
-            print(f"Unexpected error : {e}")
+            print(str(e))
 
 
-    def edit_file(self,filename):
+    def edit_file(self, filename):
         try:
 
             with open(filename,'a') as f:
                 content = input("Enter data to add = ")
                 f.write(content + "\n")
-                logger.info(f"Appended content to '{filename}'")
-                print(f"Content added to '{filename}' successfully!")
+                logger.info(f"Appended content to {filename}")
+                print(f"Content added to {filename} successfully!")
         
-        except FileNotFoundError:
-            logger.warning(f"File '{filename}' not found for editing.")
-            print(f"'{filename}' doesn't exist!")
+        except FileNotFoundError as fe:
+            logger.warning(f"File {filename} not found for editing.")
+            print(str(fe))
         
         except Exception as e:
             logger.error(f"Unexpected error occured while editing file : {e}")
-            print(f"Unexpected error : {e}")
+            print(str(e))
 
 
     def run(self):
         while True:
-            print("File Management System")
+            print("\nWelcome to File Management System")
             print("1: Create file")
             print("2: View all files")
             print("3: Delete file")
@@ -143,7 +143,8 @@ class FileManager:
                     self.edit_file(filename)
 
                 elif choice == 6 :
-                    print("Closing the system...")
+                    logger.info("Program exited by user.")
+                    print("Closing the program.")
                     break
 
                 else:
@@ -151,7 +152,7 @@ class FileManager:
 
             except ValueError as ve:
                 logger.warning(f"Invalid menu input : {ve}")
-                print(f"Enter only numbers between 1 to 6")
+                print(str(ve))
 
 
 if __name__ == "__main__":
